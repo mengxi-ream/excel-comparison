@@ -1,6 +1,6 @@
 # @author Kuiliang Zhang (Xi Meng)
 # @create date 2022-01-07 16:38:13
-# @modify date 2022-01-12 15:01:04
+# @modify date 2022-01-12 15:11:49
 # @desc compare differences between excel files
 
 import pandas as pd
@@ -8,7 +8,7 @@ import numpy as np
 
 
 def load_file(order):
-    file_path = input(f"输入第 {order} 个 excel 的地址:")
+    file_path = input(f"Please specify the path of excel file ({order}/2): ")
     file = pd.read_excel(file_path, sheet_name=None, header=None, dtype=str)
     return file
 
