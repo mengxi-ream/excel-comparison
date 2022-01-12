@@ -1,7 +1,6 @@
-# @author Xi Meng
-# @email mengxi.deyong@bytedance.com
+# @author Kuiliang Zhang (Xi Meng)
 # @create date 2022-01-07 16:38:13
-# @modify date 2022-01-07 19:05:13
+# @modify date 2022-01-12 15:01:04
 # @desc compare differences between excel files
 
 import pandas as pd
@@ -36,11 +35,13 @@ def main():
     file_1 = load_file(1)
     file_2 = load_file(2)
 
+    # get sheet names of the excel files in key_list
     key_list = list(file_1.keys())
     for key in file_2:
         if key not in key_list:
             key_list.append(key)
 
+    # define writer and related format
     writer = pd.ExcelWriter("file_diff.xlsx", engine="xlsxwriter")
     workbook = writer.book
     grey_fmt = workbook.add_format({"font_color": "#E0E0E0"})
@@ -52,8 +53,12 @@ def main():
         if sheet_name not in file_1.keys() or sheet_name not in file_2.keys():
             print(f'Sheet "{sheet_name}" does not exist in both files')
             continue
+
+        # enlarge df_1 and df_2 to the same shape
         df_1, df_2 = enlarge_df_to_same_shape(file_1[sheet_name], file_2[sheet_name])
         df_diff = df_1.copy(deep=True)
+
+        # compare values
         for row in range(df_diff.shape[0]):
             for col in range(df_diff.shape[1]):
                 value_1 = df_1.iloc[row, col]
@@ -68,6 +73,7 @@ def main():
                     value_2 = "NaN"
                 df_diff.iloc[row, col] = f"{value_1} → {value_2}"
 
+        # write df_diff
         df_diff.to_excel(writer, sheet_name=sheet_name, index=False)
         worksheet = writer.sheets[sheet_name]
 
