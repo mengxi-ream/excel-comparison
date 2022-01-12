@@ -1,6 +1,6 @@
 # @author Kuiliang Zhang (Xi Meng)
 # @create date 2022-01-07 16:38:13
-# @modify date 2022-01-12 15:11:49
+# @modify date 2022-01-12 15:34:07
 # @desc compare differences between excel files
 
 import pandas as pd
@@ -74,7 +74,7 @@ def main():
                 df_diff.iloc[row, col] = f"{value_1} → {value_2}"
 
         # write df_diff
-        df_diff.to_excel(writer, sheet_name=sheet_name, index=False)
+        df_diff.to_excel(writer, sheet_name=sheet_name, index=False, header=False)
         worksheet = writer.sheets[sheet_name]
 
         ## highlight changed cells
